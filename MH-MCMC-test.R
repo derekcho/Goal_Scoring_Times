@@ -8,8 +8,8 @@ mh=function(n,n0,x){
 	res[1,]=c(1,1,1)
 	
 	N <- length(x)
-	C.alpha <- prod(x)
-	C.beta <- prod((1-x))
+	C.alpha <- sum(log(x))
+	C.beta <- sum(log(1-x))
 	
 	for(i in 2:(n+n0)){
 			
@@ -27,8 +27,8 @@ mh=function(n,n0,x){
 			{
 				alpha.prime <- rnorm(1,alpha.1,1)
 			}
-			u.alpha <- runif(1)
-			test.alpha <- C.alpha^(alpha.prime-alpha.1) * exp(-(alpha.prime-alpha.1)) * ((beta(alpha.1,beta.1)/beta(alpha.prime,beta.1))^N) *( dexp(alpha.1)/dexp(alpha.prime))
+			u.alpha <- log(runif(1))
+			test.alpha <- C.alpha*(alpha.prime-alpha.1) + (alpha.1-alpha.prime) + ((beta(alpha.1,beta.1)-beta(alpha.prime,beta.1))*N) + log( dexp(alpha.1)/dexp(alpha.prime))
 		}
 		
 		while(u.beta > test.beta)
@@ -38,8 +38,8 @@ mh=function(n,n0,x){
 			{
 				beta.prime <- rnorm(1,beta.1,1)
 			}
-			u.beta <- runif(1)
-			test.beta <- C.beta^(beta.prime-beta.1) * exp(-(beta.prime-beta.1)) * ((beta(alpha.1,beta.1)/beta(alpha.1,beta.prime))^N) * (dexp(beta.1)/dexp(beta.prime))
+			u.beta <- log(runif(1))
+			test.beta <- C.beta*(beta.prime-beta.1) + (beta.1-beta.prime) + ((beta(beta.1,beta.1)-beta(beta.prime,beta.1))*N) + log( dexp(beta.1)/dexp(beta.prime))
 		}
 		
 		while(u.gamma > test.gamma)
