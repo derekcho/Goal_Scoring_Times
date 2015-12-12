@@ -27,7 +27,7 @@ mh=function(n,n0,x){
 				alpha.prime <- rnorm(1,alpha.1,1)
 			}
 			u.alpha <- runif(1)
-			test.alpha <- C.alpha^(alpha.prime-alpha.1) * exp(-N*(alpha.prime-alpha.1)) * (beta(alpha.1,beta.1)/beta(alpha.prime,beta.1))^N
+			test.alpha <- C.alpha^(alpha.prime-alpha.1) * exp(-(alpha.prime-alpha.1)) * ((beta(alpha.1,beta.1)/beta(alpha.prime,beta.1))^N) *( dexp(alpha.1)/dexp(alpha.prime))
 		}
 		
 		while(u.beta > test.beta)
@@ -38,7 +38,7 @@ mh=function(n,n0,x){
 				beta.prime <- rnorm(1,beta.1,1)
 			}
 			u.beta <- runif(1)
-			test.beta <- C.beta^(beta.prime-beta.1) * exp(-N*(beta.prime-beta.1)) * (beta(alpha.1,beta.1)/beta(alpha.1,beta.prime))^N
+			test.beta <- C.beta^(beta.prime-beta.1) * exp(-(beta.prime-beta.1)) * ((beta(alpha.1,beta.1)/beta(alpha.1,beta.prime))^N) * (dexp(beta.1)/dexp(beta.prime))
 		}
 		
 		while(u.gamma > test.gamma)
@@ -49,7 +49,7 @@ mh=function(n,n0,x){
 				gamma.prime <- rnorm(1,gamma.1,1)
 			}
 			u.gamma <- runif(1)
-			test.gamma <-  ((gamma.prime/gamma.1)^N) * exp(-N*(gamma.prime-gamma.1)) 
+			test.gamma <-  ((gamma.prime/gamma.1)^N) * exp(-(gamma.prime-gamma.1)) 
 		}
 		
 		res[i,] <- c(alpha.prime, beta.prime, gamma.prime)
@@ -58,8 +58,8 @@ mh=function(n,n0,x){
 }
 
 set.seed(1)
-x <- runif(50)
-x <- rnorm(5,0.5,0.1)
+x <- runif(100)
+#x <- rnorm(50,0.5,0.1)
 hist(x)
 re=mh(10000,0,x)
 params <- apply(re,2,mean)
