@@ -68,10 +68,7 @@ simulate_cox <- function(alpha,beta,home,team,opponent){
 }
 
 # Example: Chelsea (Home) vs. Aston Villa (Away)
-<<<<<<< HEAD
 set.seed(1)
-=======
->>>>>>> 1665d4a22324da2614955dc64b7bf7421cf8a89c
 S_Chelsea <- simulate_poisson(alpha = 1.074,beta = 0.84,
 															home = TRUE,team = "Chelsea",opponent = "Aston Villa")
 S_Chelsea
@@ -84,15 +81,9 @@ N <- 20
 plot(x = NULL,y = NULL,xlim = c(1,N),ylim = c(0,90),
 		 xlab = "Round of Simulation",ylab = "Scoring Times")
 for (i in 1:N) {
-<<<<<<< HEAD
 	S_Chelsea <- simulate_poisson(alpha = 1.1225,beta = 0.8149,
 																home = TRUE,team = "Chelsea",opponent = "Aston Villa")
 	S_Aston <- simulate_poisson(alpha = 1.1225,beta = 0.8149,
-=======
-	S_Chelsea <- simulate_poisson(alpha = 1.074,beta = 0.84,
-																home = TRUE,team = "Chelsea",opponent = "Aston Villa")
-	S_Aston <- simulate_poisson(alpha = 1.074,beta = 0.84,
->>>>>>> 1665d4a22324da2614955dc64b7bf7421cf8a89c
 															home = FALSE,team = "Aston Villa",opponent = "Chelsea")
 	if(length(S_Chelsea) != 0){
 		for(j in S_Chelsea) {
@@ -106,7 +97,4 @@ for (i in 1:N) {
 	}
 	abline(v = i)
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 1665d4a22324da2614955dc64b7bf7421cf8a89c
