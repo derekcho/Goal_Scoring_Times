@@ -110,7 +110,7 @@ S_Aston
 
 N <- 20
 plot(x = NULL,y = NULL,xlim = c(1,N),ylim = c(0,90),
-		 xlab = "Round of Simulation",ylab = "Scoring Times")
+		 xlab = "Round of Simulation",ylab = "Scoring Times",title = "Chelsea (H) vs. Aston Villa 20 simulations")
 for (i in 1:N) {
 	S_Chelsea <- simulate_bayesian(alpha = 1.1225,beta = 0.8149,
 																home = TRUE,team = "Chelsea",opponent = "Aston Villa")
