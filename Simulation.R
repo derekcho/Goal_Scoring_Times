@@ -47,7 +47,7 @@ simulate_poisson <- function(alpha,beta,home,team,opponent){
 	return(floor(sort(S)*90))
 }
 
-simulate_cox <- function(alpha,beta,home,team,opponent){
+simulate_bayesian <- function(alpha,beta,home,team,opponent){
 	stopifnot(is.logical(home))
 	adjust <- numeric()
 	if(home == TRUE){
@@ -61,13 +61,14 @@ simulate_cox <- function(alpha,beta,home,team,opponent){
 	S <- numeric()
 	if(N != 0){
 		for (i in 1:N) {
-			S <- append(S,rbeta(1,shape1 = rexp(1,lambda = alpha),shape2 = rexp(1,lambda = beta)))
+			S <- append(S,rbeta(1,shape1 = rexp(1,rate = 1/alpha),shape2 = rexp(1,rate = 1/beta)))
 		}
 	}
 	return(floor(sort(S)*90))
 }
 
 # Example: Chelsea (Home) vs. Aston Villa (Away)
+# Poisson Process
 set.seed(1)
 S_Chelsea <- simulate_poisson(alpha = 1.074,beta = 0.84,
 															home = TRUE,team = "Chelsea",opponent = "Aston Villa")
@@ -98,3 +99,32 @@ for (i in 1:N) {
 	abline(v = i)
 }
 
+# bayesian Process
+S_Chelsea <- simulate_bayesian(alpha = 1.074,beta = 0.84,
+															home = TRUE,team = "Chelsea",opponent = "Aston Villa")
+S_Chelsea
+
+S_Aston <- simulate_bayesian(alpha = 1.074,beta = 0.84,
+														home = FALSE,team = "Aston Villa",opponent = "Chelsea")
+S_Aston
+
+N <- 20
+plot(x = NULL,y = NULL,xlim = c(1,N),ylim = c(0,90),
+		 xlab = "Round of Simulation",ylab = "Scoring Times")
+for (i in 1:N) {
+	S_Chelsea <- simulate_bayesian(alpha = 1.1225,beta = 0.8149,
+																home = TRUE,team = "Chelsea",opponent = "Aston Villa")
+	S_Aston <- simulate_bayesian(alpha = 1.1225,beta = 0.8149,
+															home = FALSE,team = "Aston Villa",opponent = "Chelsea")
+	if(length(S_Chelsea) != 0){
+		for(j in S_Chelsea) {
+			points(x = i,y = j,col = "blue",pch = 4)
+		}
+	}
+	if(length(S_Aston) != 0){
+		for (k in S_Aston) {
+			points(x = i,y = k,col = "red",pch = 4)
+		}
+	}
+	abline(v = i)
+}
