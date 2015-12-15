@@ -1,10 +1,21 @@
-gs <- read.csv("Goal_Scoring_Times_Clean.csv", header = TRUE)
-View(gs)
+#Load Goal Scoring dataset
+dat<- read.csv("Goal_Scoring_Times_Clean.csv", header=T)
+
+#Remove Stoppage Time
+Time.of.Goal.ns <- vector(length=length(dat$Time.of.Goal))
+for(i in 1:length(dat$Time.of.Goal))
+{
+	Time.of.Goal.ns[i] <- as.numeric(substr(dat$Time.of.Goal[i],1,2))
+}
+
+dat <- cbind(dat,Time.of.Goal.ns)
+
+View(dat)
 
 a <- 1
 b <- 1
 B.old <- matrix(c(a,b), nrow =2)
-x <- runif(10)
+x <- (dat$Time.of.Goal.ns/90.001)
 n <- length(x)
 
 d = 1
